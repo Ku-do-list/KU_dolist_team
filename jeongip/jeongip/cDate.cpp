@@ -130,3 +130,21 @@ int cDate::getsMin() const
 {
 	return this->sMin;
 }
+
+void cDate::setsTime(const int & year, const int & month, const int & day, const int & hour, const int & min)
+{
+	this->sYear = year;
+	this->sMonth = month;
+	this->sDay = day;
+	this->sHour = hour;
+	this->sMin = min;
+}
+
+void cDate::seteTime(const int & year, const int & month, const int & day, const int & hour, const int & min)
+{
+	this->eYear = year;
+	this->eMonth = month;
+	this->eDay = day;
+	this->eHour = hour;
+	this->eMin = min;
+}

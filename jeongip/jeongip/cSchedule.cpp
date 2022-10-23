@@ -280,3 +280,100 @@ string cSchedule::getDayW(int weekly) const
 	return day[weekly];
 }
 
+void cSchedule::setsName(const string & name)
+{
+	this->sName = name;
+}
+
+void cSchedule::setRepeat(const int & type)
+{
+	bool isLeaf;
+	if (sYear % 4 == 0 && sYear % 100 != 0 || sYear % 400 == 0)
+		isLeaf = true;
+	else
+		isLeaf = false;
+	int m[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	m[1] = isLeaf ? 29 : 28;
+	int a = 0, b = 0;
+	bool check = 1;
+re:;
+	if (type == 1) {
+		cout << "수정할 반복 월일을 입력해주세요 [ex) 06 10] >> ";
+		cin >> a >> b;
+		if (cin.fail()) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else if (a < 1 || a > 12) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		/*else if (b < m[sMonth-1] || b>m[sMonth-1]) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}*/
+		else {
+			this->rAnnual.first = a;
+			this->rAnnual.second = b;
+			cout << "일정의 연 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	else if (type == 2) {
+		cout << "수정할 반복 일을 입력해주세요 [ex) 10] >> ";
+		cin >> a;
+		if (cin.fail()) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		/*else if (a < m[sMonth-1] || a>m[sMonth-1]) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}*/
+		else {
+			this->rMontly = a;
+			cout << "일정의 월 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	else if (type == 3) {
+		cout << "수정할 반복 요일을 입력해주세요 [0=일요일, 6=월요일] >> ";
+		cin >> a;
+		if (!cin) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else if (a < 0 || a>6) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else {
+			this->rWeekly = a;
+			cout << "일정의 요일 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	_getch();
+}
+
+void cSchedule::setIsDone(const bool & is)
+{
+	this->sIsDone = is;
+}
+
+void cSchedule::setsType(const int & type)
+{
+	this->sType = type;
+}
+

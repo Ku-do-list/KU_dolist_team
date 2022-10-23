@@ -50,5 +50,11 @@ public:
 	int getrMonthly() const;
 	int getrWeekly() const;
 	string getDayW(int weekly) const;
+
+	// @ set methods
+	void setsName(const string& name);
+	void setRepeat(const int& type);
+	void setIsDone(const bool& is);
+	void setsType(const int& type);
 };
 

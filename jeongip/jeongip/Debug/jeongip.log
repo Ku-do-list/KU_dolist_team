@@ -1,8 +1,10 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(jeongip.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   cPlayList.cpp
-c:\users\user\source\repos\jeongip\jeongip\cdate.h(75): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\user\source\repos\jeongip\jeongip\cdate.h(78): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
 c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(87): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
 c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(138): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
 c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(149): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(218): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(208): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(432): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(704): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   jeongip.vcxproj -> C:\Users\user\source\repos\jeongip\Debug\KU_do_list.exe
