@@ -5,24 +5,9 @@ cPlayList::cPlayList()
 {
 	this->list = new cSchedule[100];
 
-	// +a ) 일정 및 카테고리 Data 구문 By file 입력
-	/*
-
-	Data 파일 예시
-	12						-> &sCount
-	1 0 2022 10 12 19 30		-> &sType, &sIsDone, &날짜s
-	4 1 2022 10 1 10 30 2022 10 2 11 0	-> 마찬가지 (타입 받아서 분기 코드 쓰면 될 듯)
-	*/
-
-	/*
-	categoryData 파일 예시
-	4				-> &cateroryNum
-	// 이후 categoryData = new string[num] 해주고
-	운동			-> &categoryData[0]
-	취미			-> ~[1]
-	공부
-	아르바이트
-	*/
+	category[0] = "운동";
+	category[1] = "공부";
+	category[2] = "취미";
 
 }
 
@@ -45,7 +30,7 @@ cPlayList::~cPlayList()
 void cPlayList::addSchedule()
 {
 	if (sCount < 100) {
-		list[sCount++].makeSchedule();
+		list[sCount++].makeSchedule(category, categorySize);
 	}
 	else {
 		cout << ">> 일정을 더 이상 추가할 수 없습니다.\n";
@@ -72,6 +57,10 @@ bool cPlayList::readData(string filename)
 bool cPlayList::saveData(string filename)
 {
 	return false;
+}
+
+void cPlayList::mCategory() {
+	manageCategory(category, categorySize);
 }
 
 bool cPlayList::makeCategory()
@@ -130,7 +119,7 @@ void cPlayList::playList()
 			break;
 		}
 		case 5: {
-			printf("5. 카테고리 관리");
+			mCategory();
 			break;
 		}
 		case 6: {

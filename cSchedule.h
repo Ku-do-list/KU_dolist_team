@@ -35,11 +35,15 @@ public:
 	cSchedule();
 	~cSchedule();
 
+	bool duplicate = false;
+	int categoryNum = 3;
 	// @ 일정 추가
-	void makeSchedule();
+	void makeSchedule(string* category, int& categorySize);
+	void manageCategory(string* category, int& categorySize);
+	string s = "";
 	// @ 일정 삭제
 	void deleteSchedule();
-	
+	bool isSign(string str);
 	// @ 일정 예외처리 함수
 	// bool isRightSchedule(); : ProtoType, Override needed
 	bool isRightSchedule(string name);

@@ -40,7 +40,7 @@ public:
 	void editSchedule();
 
 	// @ 5) 카테고리 관리
-	void manageCategory();
+	void mCategory();
 
 	// @ 6) 종료
 
@@ -59,5 +59,8 @@ public:
 
 	// @ showMenu
 	int showMenu();
+
+	string category[100] = { "" }; //카테고리 배열 선언(개수제한 100개)
+	int categorySize = 3;
 
 };
