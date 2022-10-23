@@ -80,7 +80,8 @@ void cSchedule::makeSchedule()
 			goto re3;
 		}
 		else {
-
+			writeFileList.put((char)(sel+48));
+			writeFileList.put(' ');
 		}
 
 
@@ -94,6 +95,19 @@ void cSchedule::makeSchedule()
 			_getch();
 			goto re4;
 		}
+		else {
+			string syear = to_string(year);
+			string smonth = to_string(month);
+			string sday = to_string(day);
+			string shour = to_string(hour);
+			string smin = to_string(min);
+			string sresult = syear+" "+smonth+" "+sday+" "+shour+" "+smin;
+
+			char ch4[20] = "";
+			strcpy(ch4, sresult.c_str());
+			writeFileList.write(ch4, sizeof(ch4));
+			writeFileList.put('\n');
+		}
 
 	re5:;
 		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
@@ -104,6 +118,20 @@ void cSchedule::makeSchedule()
 				check = false;
 				_getch();
 				goto re5;
+			}
+			else {
+				string syear = to_string(year);
+				string smonth = to_string(month);
+				string sday = to_string(day);
+				string shour = to_string(hour);
+				string smin = to_string(min);
+				string sresult = syear + " " + smonth + " " + sday + " " + shour + " " + smin;
+
+				char ch4[20] = "";
+				strcpy(ch4, sresult.c_str());
+				writeFileList.write(ch4, sizeof(ch4));
+				writeFileList.put('\n');
+
 			}
 		}
 		else {
