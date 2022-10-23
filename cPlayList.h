@@ -67,7 +67,7 @@ public:
 	// @ showMenu
 	int showMenu();
 
-	string category[100] = { "" }; //카테고리 배열 선언(개수제한 100개)
+	string category[20] = { "" }; //카테고리 배열 선언(개수제한 20개)
 	int categorySize = 3;
 
 };

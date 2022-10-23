@@ -41,6 +41,7 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 		else {
 			char ch1[20]=""; //초기화 적용
 			strcpy(ch1, name.c_str());
+			writeFileList.put('\n');
 			writeFileList.write(ch1, sizeof(ch1));
 			writeFileList.put('/');
 		}
@@ -62,10 +63,10 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 
 			// @ 예외처리
 			if (!categoryNum) {
-				cout << "숫자만 입력하세요. "<<endl;
+				cout << "숫자만 입력하세요. "<<endl<<endl;
 			}
 			else if (categoryNum < 1 || categoryNum >categorySize + 1) {
-				cout << "1~" << categorySize + 1 << "사이의 숫자만 입력해주세요 "<<endl;
+				cout << "1~" << categorySize + 1 << "사이의 숫자만 입력해주세요 "<<endl<<endl;
 			}
 			else if (categoryNum - 1 == categorySize) {
 				cout << "<카테고리 추가>" << endl;
@@ -108,9 +109,12 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 					strcpy(ch, category[categoryNum - 1].c_str());
 					writeFileList.write(ch, sizeof(ch));
 					writeFileList.put(' ');
+					writeFileCategory.write(ch, sizeof(ch));
+					writeFileCategory.put('\n');
 					break;
 			}
 		}
+		writeFileCategory.close();
 		
 
 		// 3. 일정 반복 기능
@@ -150,7 +154,7 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 			char ch4[20] = "";
 			strcpy(ch4, sresult.c_str());
 			writeFileList.write(ch4, sizeof(ch4));
-			writeFileList.put('\n');
+			//writeFileList.put('\n');
 		}
 
 	re5:;
@@ -174,7 +178,6 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 				char ch4[20] = "";
 				strcpy(ch4, sresult.c_str());
 				writeFileList.write(ch4, sizeof(ch4));
-				writeFileList.put('\n');
 
 			}
 		}
@@ -241,11 +244,11 @@ bool cSchedule::isRightSchedule(string name)
 bool cSchedule::isRightSchedule(int type)
 {
 	if (!cin) {
-		cout << ">> 올바른 입력을 해주세요.\n";
+		cout << ">> 올바른 입력을 해주세요.\n\n";
 		return false;
 	}
 	else if (!(type == 1 || type == 2 || type == 3 || type == 4)) {
-		cout << ">> 1에서 4 사이의 값을 입력해주세요.\n";
+		cout << ">> 1에서 4 사이의 값을 입력해주세요.\n\n";
 		return false;
 	}
 	else {
@@ -279,34 +282,34 @@ bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour
 	m[1] = isLeaf ? 29 : 28;
 
 	if (!cin) {
-		cout << ">> 형식에 맞는 올바른 입력을 해주세요.\n";
+		cout << ">> 형식에 맞는 올바른 입력을 해주세요.\n\n";
 		return false;
 	}
 	else if (year > 2025) {
-		cout << ">> 2025년 까지만 입력 가능합니다. 다시 입력해주세요.\n";
+		cout << ">> 2025년 까지만 입력 가능합니다. 다시 입력해주세요.\n\n";
 		return false;
 	}
 	else if (month < 1 || month > 12) {
-		cout << ">> 입력하신 날짜의 월을 다시 확인해주세요.\n";
+		cout << ">> 입력하신 날짜의 월을 다시 확인해주세요.\n\n";
 		return false;
 	}
 	else if (day < 1 || day > m[month - 1]) {
-		cout << ">> 입력하신 날짜의 일자를 다시 확인해주세요.\n";
+		cout << ">> 입력하신 날짜의 일자를 다시 확인해주세요.\n\n";
 		return false;
 	}
 	else if (hour < 0 || hour > 23) {
-		cout << ">> 입력하신 날짜의 시간을 다시 확인해주세요.\n";
+		cout << ">> 입력하신 날짜의 시간을 다시 확인해주세요.\n\n";
 		return false;
 	}
 	else if (min < 0 || min > 59) {
-		cout << ">> 입력하신 날짜의 분을 다시 확인해주세요.\n";
+		cout << ">> 입력하신 날짜의 분을 다시 확인해주세요.\n\n";
 		return false;
 	}
 
 	else {
 		if (isS) {
 			if (!isAfterNow(year, month, day, hour, min)) {
-				cout << ">> 현재 이전의 날짜는 입력하실 수 없습니다.\n";
+				cout << ">> 현재 이전의 날짜는 입력하실 수 없습니다.\n\n";
 				return false;
 			}
 			this->sYear = year;
@@ -326,7 +329,7 @@ bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour
 			}
 			case 3: {	// 매 주 같은 요일 반복
 				this->rWeekly = getDayOfWeek(sYear, sMonth, sDay);
-				cout << "\n 요일 : " << this->rWeekly << '\n';
+				//cout << "\n 요일 : " << this->rWeekly << '\n';
 				break;
 			}
 			}

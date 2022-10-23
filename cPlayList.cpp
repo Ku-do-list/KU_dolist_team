@@ -321,7 +321,30 @@ re2:;
 			goto re2;
 		}
 		else {
-			t = sel - 1;
+		ree:;
+			if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
+			cout << "편집할 일정의 번호가 " << sel << "이 맞습니까? (y/n) >> ";
+			char c;
+			cin >> c;
+			if (cin.fail()) {
+				cout << "올바른 입력을 다시 해주세요.\n";
+				check = false;
+				_getch();
+				goto ree;
+			}
+			if (c == 'y')
+				t = sel - 1;
+			else if (c == 'n') {
+				cout << "일정 편집 메뉴로 돌아갑니다.\n";
+				_getch();
+				goto re2;
+			}
+			else {
+				cout << "올바른 입력을 다시 해주세요.\n";
+				check = false;
+				_getch();
+				goto ree;
+			}
 		}
 
 		if (list[t].getsType() == 4) {	// 반복성 x
