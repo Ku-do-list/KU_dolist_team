@@ -32,11 +32,6 @@ private:
 	// @ 12달의 각 일수 저장 (윤년 계산)
 	int* daysofMonth;
 
-	// @ 반복 일정의 유형 별 data
-	int repeatAnnual = -1;
-	int repeatMonthly = -1;
-	int repeatWeekly = -1;
-
 protected:
 	// @ 일정의 시작 시각
 	int sYear, sMonth, sDay, sHour, sMin;
@@ -63,6 +58,17 @@ public:
 
 	// @ 윤년 여부 판단
 	bool IsLeafYear(const int& year);
+
+	int getsYear() const;
+	int getsMonth() const;
+	int getsDay() const;
+
+	int geteYear() const;
+	int geteMonth() const;
+	int geteDay() const;
+	
+	int getsHour() const;
+	int getsMin() const;
 
 	// @ and Windows API Functions . . .
 	void gotoxy(int x, int y) {

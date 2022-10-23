@@ -90,3 +90,43 @@ bool cDate::IsLeafYear(const int& year)
 	else
 		return false;
 }
+
+int cDate::getsYear() const
+{
+	return this->sYear;
+}
+
+int cDate::getsMonth() const
+{
+	return this->sMonth;
+}
+
+int cDate::geteYear() const
+{
+	return this->eYear;
+}
+
+int cDate::geteMonth() const
+{
+	return this->eMonth;
+}
+
+int cDate::geteDay() const
+{
+	return this->eDay;
+}
+
+int cDate::getsDay() const
+{
+	return this->sDay;
+}
+
+int cDate::getsHour() const
+{
+	return this->sHour;
+}
+
+int cDate::getsMin() const
+{
+	return this->sMin;
+}

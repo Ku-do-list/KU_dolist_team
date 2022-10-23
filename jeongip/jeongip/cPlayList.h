@@ -9,7 +9,7 @@
 class cPlayList
 	:public cSchedule
 {
-private:
+protected:
 	// @ 일정 저장할 배열
 	cSchedule* list;
 	

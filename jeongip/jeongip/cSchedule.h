@@ -5,7 +5,7 @@
 class cSchedule :
 	public cDate
 {
-private:
+protected:
 	// @ 일정 이름 및 카테고리명
 	string sName;
 	string sCategory;
@@ -39,7 +39,16 @@ public:
 	// bool isRightSchedule(); : ProtoType, Override needed
 	bool isRightSchedule(string name);
 	bool isRightSchedule(int type);
+	bool isRightSchedule(int year, int month);
 	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
 
+	// @ get methods
+	string getsName() const;
+	string getsCategory() const;
+	int getsType() const;
+	pair<int, int> getrAnnual() const;
+	int getrMonthly() const;
+	int getrWeekly() const;
+	string getDayW(int weekly) const;
 };
 

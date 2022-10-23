@@ -18,6 +18,7 @@ void cSchedule::makeSchedule()
 	int sel = -1;
 	int year, month, day, hour, min;
 	string name, category;
+	char s;
 
 	while (1) {
 
@@ -150,6 +151,18 @@ bool cSchedule::isRightSchedule(int type)
 	}
 }
 
+bool cSchedule::isRightSchedule(int year, int month)
+{
+
+	if (!cin) {
+		cout << ">> 올바른 입력을 해주세요.\n";
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 // # 예외처리 함수 :: 일정 날짜 및 시각
 bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour, int min)
 {
@@ -229,5 +242,41 @@ bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour
 			return true;
 		}
 	}
+}
+
+string cSchedule::getsName() const
+{
+	return this->sName;
+}
+
+string cSchedule::getsCategory() const
+{
+	return this->sCategory;
+}
+
+int cSchedule::getsType() const
+{
+	return this->sType;
+}
+
+pair<int, int> cSchedule::getrAnnual() const
+{
+	return { this->rAnnual.first, this->rAnnual.second };
+}
+
+int cSchedule::getrMonthly() const
+{
+	return this->rMontly;
+}
+
+int cSchedule::getrWeekly() const
+{
+	return this->rWeekly;
+}
+
+string cSchedule::getDayW(int weekly) const
+{
+	string day[7] = { "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" };
+	return day[weekly];
 }
 
