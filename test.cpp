@@ -1,6 +1,6 @@
 #include <iostream>
-#include <queue>
-
+#include <regex>
+//#include <string>
 using namespace std;
 
 
@@ -11,6 +11,9 @@ using namespace std;
         category
     }
 }*/
+bool isSign(std::string const& str) {
+    return std::regex_match(str, std::regex("^[가-힣A-Aa-z0-9]+$"));
+}
 
 int main() {
     int user = 0;
@@ -19,7 +22,6 @@ int main() {
     int categorySize = 3;
     bool duplicate = false;
     string s = "";
-    queue<string> q;
     category[0] = "운동";
     category[1] = "공부";
     category[2] = "취미";
@@ -42,7 +44,22 @@ int main() {
         {
             cout << "<카테고리 추가>" << endl;
             cout << "추가하실 카테고리 이름을 입력해주세요(모든 기호 사용 제외) >>";
-            cin >> s;
+            while (1) {
+                cin >> s;
+                if (s.size() > 20) {
+                    cout << " 20자 이하로 입력해주세요 >>";
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                }
+                else if (!isSign(s)) {
+                    cout << "기호를 입력하지 마세요 >>";
+                    cin.clear();
+                    cin.ignore(INT_MAX, '\n');
+                }
+                else {
+                    break;
+                }
+            }
             for (int i = 0; i < categorySize; i++) {
                 if (category[i] == s) {
                     duplicate = true;
