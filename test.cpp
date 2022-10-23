@@ -11,8 +11,13 @@ using namespace std;
         category
     }
 }*/
-bool isSign(std::string const& str) {
-    return std::regex_match(str, std::regex("^[가-힣A-Aa-z0-9]+$"));
+bool isSign(string str) {
+    for (size_t i = 0; i < str.length(); i++) {
+        if ((str.at(i) > 32 && str.at(i) < 48) || (str.at(i) > 58 && str.at(i) < 65) ||
+            (str.at(i) > 90 && str.at(i) < 96)) {
+            return false;
+        }
+    }
 }
 
 int main() {
