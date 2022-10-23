@@ -6,21 +6,25 @@
 #define localtime_r(_time, _result) _localtime64_s(_result, _time)
 #endif
 
+
 class cPlayList
 	:public cSchedule
 {
 private:
 	// @ 일정 저장할 배열
 	cSchedule* list;
-	
+
 	// @ 일정 총 개수
 	int sCount = 0;
+
+	// @ 일정 index number
+	vector<int> v;
 
 	// @ 카테고리 데이터, 카테고리 수
 	string* categoryData = nullptr;
 	int categoryNum = 0;
 
-	// @ Data Files	:: 향후 수정 요망
+	// @ Data Files   :: 향후 수정 요망
 	string dataSchedule = "data.txt";
 	string dataCategory = "dataCategory.txt";
 public:
@@ -37,7 +41,10 @@ public:
 	void checkSchedule();
 
 	// @ 4) 일정 편집
-	void editSchedule();
+	void editSchedule(int index);
+	// @ 처음 편집할 일정 이름 입력시 존재확인 예외처리 함수
+	void isRightexit(string name);
+	void isRightexit_over1();
 
 	// @ 5) 카테고리 관리
 	void manageCategory();
@@ -61,4 +68,3 @@ public:
 	int showMenu();
 
 };
-
