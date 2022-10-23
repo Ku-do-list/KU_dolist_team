@@ -48,7 +48,7 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 		// 2. 일정 카테고리
 	re2:;
 		while (1) {
-			if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
+			cin.clear(); cin.ignore(INT_MAX, '\n');
 			category[categorySize] = "직접 입력";
 			categorySize++;
 			for (int i = 0; i < categorySize; i++) {
@@ -62,10 +62,10 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 
 			// @ 예외처리
 			if (!categoryNum) {
-				cout << "숫자만 입력하세요 >>";
+				cout << "숫자만 입력하세요. "<<endl;
 			}
 			else if (categoryNum < 1 || categoryNum >categorySize + 1) {
-				cout << "1~" << categorySize + 1 << "사이의 숫자만 입력해주세요 >>";
+				cout << "1~" << categorySize + 1 << "사이의 숫자만 입력해주세요 "<<endl;
 			}
 			else if (categoryNum - 1 == categorySize) {
 				cout << "<카테고리 추가>" << endl;
@@ -202,22 +202,38 @@ bool cSchedule::isSign(std::string name) {
 // # 예외처리 함수 :: 일정 이름
 bool cSchedule::isRightSchedule(string name)
 {
-	if (name.size() > 20) {
-		cout << ">> 20자 이하로 입력해주세요.\n";
-		return false;
-	}
-	else if (name.empty()) {
+	if (name.empty()) {
 		cout << ">> 공백 입력 불가. 다시 입력해주세요.\n";
 		return false;
 	}
-	else if (!isSign(name)) {
-		cout << ">> 기호 입력 불가. 다시 입력해주세요.\n";
+
+	char* s;
+	double size = 0;
+	s = new char[name.length()];
+	for (size_t i = 0; i < name.length(); i++) {
+		s[i] = name.at(i);
+		if (s[i] >> 7)
+			size -= 0.5;
+	}
+	size += name.length();
+	delete[] s;
+	s = nullptr;
+
+	if ((int)size > 20) {
+		cout << "20자 이하로 다시 입력해주세요.\n";
 		return false;
 	}
-	else {
-		this->sName = name;
-		return true;
+
+	for (size_t i = 0; i < name.length(); i++) {
+		if ((name.at(i) > 32 && name.at(i) < 48) || (name.at(i) > 57 && name.at(i) < 65) ||
+			(name.at(i) > 90 && name.at(i) < 97) || (name.at(i) > 122 && name.at(i) < 127)) {
+			cout << ">> 특수문자 입력 불가. 다시 입력해주세요.\n";
+			return false;
+		}
 	}
+
+	this->sName = name;
+	return true;
 }
 
 
@@ -754,4 +770,101 @@ string cSchedule::getDayW(int weekly) const
 {
 	string day[7] = { "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" };
 	return day[weekly];
+}
+
+void cSchedule::setsName(const string& name)
+{
+	this->sName = name;
+}
+
+void cSchedule::setRepeat(const int& type)
+{
+	bool isLeaf;
+	if (sYear % 4 == 0 && sYear % 100 != 0 || sYear % 400 == 0)
+		isLeaf = true;
+	else
+		isLeaf = false;
+	int m[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	m[1] = isLeaf ? 29 : 28;
+	int a = 0, b = 0;
+	bool check = 1;
+re:;
+	if (type == 1) {
+		cout << "수정할 반복 월일을 입력해주세요 [ex) 06 10] >> ";
+		cin >> a >> b;
+		if (cin.fail()) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else if (a < 1 || a > 12) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		/*else if (b < m[sMonth-1] || b>m[sMonth-1]) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}*/
+		else {
+			this->rAnnual.first = a;
+			this->rAnnual.second = b;
+			cout << "일정의 연 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	else if (type == 2) {
+		cout << "수정할 반복 일을 입력해주세요 [ex) 10] >> ";
+		cin >> a;
+		if (cin.fail()) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		/*else if (a < m[sMonth-1] || a>m[sMonth-1]) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}*/
+		else {
+			this->rMontly = a;
+			cout << "일정의 월 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	else if (type == 3) {
+		cout << "수정할 반복 요일을 입력해주세요 [0=일요일, 6=월요일] >> ";
+		cin >> a;
+		if (!cin) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else if (a < 0 || a > 6) {
+			cout << "잘못된 입력입니다. 다시 입력해주세요.\n";
+			check = false;
+			_getch();
+			goto re;
+		}
+		else {
+			this->rWeekly = a;
+			cout << "일정의 요일 반복 주기가 변경 완료되었습니다.\n";
+		}
+	}
+	_getch();
+}
+
+void cSchedule::setIsDone(const bool& is)
+{
+	this->sIsDone = is;
+}
+
+void cSchedule::setsType(const int& type)
+{
+	this->sType = type;
 }

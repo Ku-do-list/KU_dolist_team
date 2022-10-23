@@ -64,6 +64,7 @@ public:
 	// @ 윤년 여부 판단
 	bool IsLeafYear(const int& year);
 
+	//@ get methods
 	int getsYear() const;
 	int getsMonth() const;
 	int getsDay() const;
@@ -74,6 +75,10 @@ public:
 
 	int getsHour() const;
 	int getsMin() const;
+
+	// @ set methods
+	void setsTime(const int& year, const int& month, const int& day, const int& hour, const int& min);
+	void seteTime(const int& year, const int& month, const int& day, const int& hour, const int& min);
 
 	// @ and Windows API Functions . . .
 	void gotoxy(int x, int y) {

@@ -53,6 +53,13 @@ public:
 	// @ 일정 편집 예외처리 함수 
 	int showmenu_edit();
 
+	// @ 일정 예외처리 함수
+	// bool isRightSchedule(); : ProtoType, Override needed
+	bool isRightSchedule(string name);
+	bool isRightSchedule(int type);
+	bool isRightSchedule(int year, int month);
+	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
+
 	// @ get methods
 	string getsName() const;
 	string getsCategory() const;
@@ -62,11 +69,9 @@ public:
 	int getrWeekly() const;
 	string getDayW(int weekly) const;
 
-	// @ 일정 예외처리 함수
-	// bool isRightSchedule(); : ProtoType, Override needed
-	bool isRightSchedule(string name);
-	bool isRightSchedule(int type);
-	bool isRightSchedule(int year, int month);
-	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
-
+	// @ set methods
+	void setsName(const string& name);
+	void setRepeat(const int& type);
+	void setIsDone(const bool& is);
+	void setsType(const int& type);
 };

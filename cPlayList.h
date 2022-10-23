@@ -40,7 +40,7 @@ public:
 	void checkSchedule();
 
 	// @ 4) 일정 편집
-	void editSchedule(int index);
+	void editSchedule();
 
 	// @ 처음 편집할 일정 이름 입력시 존재확인 예외처리 함수
 	void isRightexit(string name);
