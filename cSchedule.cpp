@@ -13,14 +13,14 @@ cSchedule::~cSchedule()
 {
 }
 
-void cSchedule::makeSchedule()
+void cSchedule::makeSchedule(string* category, int& categorySize)
 {
 	writeFileList.open("KU_do_list.txt", ios::out | ios::app);
 	writeFileCategory.open("KU_do_list_category.txt", ios::out | ios::app);
 	bool check = true;		// 예외 발생 체크
 	int sel = -1;
 	int year, month, day, hour, min;
-	string name, category;
+	string name;
 
 	while (1) {
 
@@ -47,27 +47,71 @@ void cSchedule::makeSchedule()
 
 		// 2. 일정 카테고리
 	re2:;
-		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
-		cout << "일정의 카테고리를 입력해주세요 >> ";
-		cin >> category;
+		while (1) {
+			if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
+			category[categorySize] = "직접 입력";
+			categorySize++;
+			for (int i = 0; i < categorySize; i++) {
+				cout << i + 1 << ". " << category[i] << " ";
+			}
+			cout << endl;
+			category[categorySize] = "";
+			categorySize--;
+			cout << "일정의 카테고리번호를 입력해주세요 >> ";
+			cin >> categoryNum;
 
-		char ch2[20] = "";
-		strcpy(ch2, category.c_str());
-		writeFileCategory.write(ch2, sizeof(ch2));
-		writeFileList.write(ch2, sizeof(ch2));
-		writeFileCategory.put('\n');
-		/*	// 카테고리 확인 구문
-		for (size_t i = 0; i < categoryNum; i++) {
-			if (category.compare(categoryData[i])) {
-				this->sCategory = category;
+			// @ 예외처리
+			if (!categoryNum) {
+				cout << "숫자만 입력하세요 >>";
+			}
+			else if (categoryNum < 1 || categoryNum >categorySize + 1) {
+				cout << "1~" << categorySize + 1 << "사이의 숫자만 입력해주세요 >>";
+			}
+			else if (categoryNum - 1 == categorySize) {
+				cout << "<카테고리 추가>" << endl;
+				cout << "추가하실 카테고리 이름을 입력해주세요(모든 기호 사용 제외) >>";
+				while (1) {
+					cin >> s;
+					if (s.size() > 20) {
+						cout << " 20자 이하로 입력해주세요 >>";
+						cin.clear();
+						cin.ignore(INT_MAX, '\n');
+					}
+					else if (!isSign(s)) {
+						cout << "기호를 입력하지 마세요 >>";
+						cin.clear();
+						cin.ignore(INT_MAX, '\n');
+					}
+					else {
+						break;
+					}
+				}
+				for (int i = 0; i < categorySize; i++) {
+					if (category[i] == s) {
+						duplicate = true;
+						break;
+					}
+				}
+				if (duplicate == false) {
+					cout << "성공적으로 추가 되었습니다." << endl;
+					category[categorySize] = s;
+					categorySize++;
+					break;
+				}
+				else {
+					cout << "사전에 있는 카테고리 입니다." << endl;
+					duplicate = false;
+				}
 			}
 			else {
-				cout << ">> 해당 카테고리가 존재하지 않습니다.";
-				system("pause");
-				goto re;
+					char ch[20] = "";
+					strcpy(ch, category[categoryNum - 1].c_str());
+					writeFileList.write(ch, sizeof(ch));
+					writeFileList.put(' ');
+					break;
 			}
 		}
-		*/
+		
 
 		// 3. 일정 반복 기능
 	re3:;
@@ -125,7 +169,7 @@ void cSchedule::makeSchedule()
 				string sday = to_string(day);
 				string shour = to_string(hour);
 				string smin = to_string(min);
-				string sresult = syear + " " + smonth + " " + sday + " " + shour + " " + smin;
+				string sresult = "&" + syear + " " + smonth + " " + sday + " " + shour + " " + smin;
 
 				char ch4[20] = "";
 				strcpy(ch4, sresult.c_str());
@@ -145,7 +189,7 @@ void cSchedule::makeSchedule()
 }
 
 //기호 입력에 대한 예외처리 
-bool isSign(std::string const& name) {
+bool cSchedule::isSign(std::string name) {
 	for (size_t i = 0; i < name.length(); i++) {
 		if ((name.at(i) > 32 && name.at(i) < 48) || (name.at(i) > 57 && name.at(i) < 65) ||
 			(name.at(i) > 90 && name.at(i) < 97) || (name.at(i) > 122 && name.at(i) < 127)) {
@@ -291,7 +335,7 @@ void cSchedule::deleteSchedule()
 		getline(cin, delete_name);
 		if (!isRightSchedule(delete_name)) {
 			check = false;
-			_getch(); //
+			_getch(); 
 			goto re1;
 		}
 
@@ -325,9 +369,125 @@ void cSchedule::deleteSchedule()
 		//2) 사용자가 입력한 일정의 이름이 존재하지 않을 경우
 		cout << "해당 이름을 가진 일정이 존재하지 않습니다. 이름을 다시 확인해주세요.";
 		goto re1;
+
 		//3) 일정이 1개일 경우 
 		cout << "일정이 삭제되었습니다." << endl;
 		
 	}
 
+}
+
+void cSchedule::manageCategory(string* category, int& categorySize) {
+	int user = 0;
+
+	while (1) {
+		cout << "1) 카테고리 추가 2) 카테고리 편집 3) 카테고리 삭제" << endl;
+		cout << "\n 메뉴 번호를 입력해주세요 >>";
+		cin >> user;
+		if (!user) {
+			cout << "숫자만 입력하세요 >>";
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+		else if (user < 1 || user >4) {
+			cout << "1~4 사이의 숫자만 입력해주세요 >>";
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+		else if (user == 1)
+		{
+			cout << "\n<카테고리 추가>" << endl;
+			cout << "추가하실 카테고리 이름을 입력해주세요(모든 기호 사용 제외) >>";
+			while (1) {
+				cin >> s;
+				if (s.size() > 20) {
+					cout << " 20자 이하로 입력해주세요 >>";
+					cin.clear();
+					cin.ignore(INT_MAX, '\n');
+				}
+				else if (!isSign(s)) {
+					cout << "기호를 입력하지 마세요 >>";
+					cin.clear();
+					cin.ignore(INT_MAX, '\n');
+				}
+				else {
+					break;
+				}
+			}
+			for (int i = 0; i < categorySize; i++) {
+				if (category[i] == s) {
+					duplicate = true;
+					break;
+				}
+			}
+			if (duplicate == false) {
+				cout << "성공적으로 추가 되었습니다." << endl;
+				category[categorySize] = s;
+				categorySize++;
+			}
+			else {
+				cout << "사전에 있는 카테고리 입니다." << endl;
+				duplicate = false;
+			}
+			break;
+		}
+		else if (user == 2)
+		{
+			cout << "<카테고리 편집>";
+			for (int i = 0; i < categorySize; i++) {
+				cout << i + 1 << ". " << category[i] << " ";
+			}
+			cout << endl;
+			cout << "편집하실 카테고리 번호를 입력해주세요(모든 기호 사용 제외)>>";
+			while (1) {
+				cin >> categoryNum;
+				if (!categoryNum) {
+					cout << "숫자만 입력하세요 >>";
+					cin.clear();
+					cin.ignore(INT_MAX, '\n');
+				}
+				else if (categoryNum < 1 || categoryNum >categorySize) {
+					cout << "범위 사이의 숫자만 입력해주세요 >>";
+					cin.clear();
+					cin.ignore(INT_MAX, '\n');
+				}
+				else {
+					break;
+				}
+			}
+			cout << category[categoryNum - 1] << " -> ";
+			cin >> s;
+			for (int i = 0; i < categorySize; i++) {
+				if (category[i] == s) {
+					duplicate = true;
+					break;
+				}
+			}
+			cout << endl;
+			if (duplicate == false) {
+				category[categoryNum - 1] = s;
+				cout << "변경되었습니다.";
+			}
+			else {
+				cout << "사전에 있는 카테고리 입니다." << endl;
+				duplicate = false;
+			}
+			break;
+		}
+		else if (user == 3)
+		{
+			cout << "<카테고리 삭제>";
+			for (int i = 0; i < categorySize; i++) {
+				cout << i + 1 << ". " << category[i] << " ";
+			}
+			cout << endl;
+			cout << "삭제하실 카테고리 번호를 입력해주세요(모든 기호 사용 제외)>>";
+			cin >> categoryNum;
+			for (int i = categoryNum - 1; i < categorySize; i++) {
+				category[i] = category[i + 1];
+			}
+			categorySize--;
+			break;
+		}
+	}
 }
