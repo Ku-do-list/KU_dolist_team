@@ -146,7 +146,7 @@ re:;
 				}
 				cout << "일\n  - 매 주 " << getDayW(list[i].getrWeekly()) << " 반복 일정\n";
 			}
-			break;s
+			break;
 		}
 		case 4: {	// 반복x, 마감일정 포함
 			int sy = list[i].getsYear();	// 시작 연도
@@ -265,6 +265,8 @@ void cPlayList::playList()
 			cout << "편집할 일정의 이름을 입력해주세요 >> ";
 			getline(cin, _name);
 
+			isRightexit(_name);
+
 			if (v.size() == 0) {
 				check = false;
 				_getch();
@@ -321,6 +323,7 @@ re:;
 
 void cPlayList::isRightexit(string _name) {
 	v.clear();
+	vector<int>().swap(v);
 
 	for (int i = 0; i <= 100; i++) {
 		if (_name.compare(list[i].getsName()) == 0) {
