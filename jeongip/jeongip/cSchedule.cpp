@@ -35,6 +35,7 @@ void cSchedule::makeSchedule()
 			goto re1;
 		}
 
+
 		// 2. 일정 카테고리
 	re2:;
 		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
@@ -104,25 +105,25 @@ bool cSchedule::isRightSchedule(string name)
 	}
 
 	char *s;
-	int size = 0;
+	double size = 0;
 	s = new char[name.length()];
 	for (size_t i = 0; i < name.length(); i++) {
 		s[i] = name.at(i);
 		if (s[i] >> 7)
-			size -= 1;
+			size -= 0.5;
 	}
-	size += strlen(s); 
+	size += name.length(); 
 	delete[] s;
 	s = nullptr;
 
-	if (size > 20) {
+	if ((int)size > 20) {
 		cout << "20자 이하로 다시 입력해주세요.\n";
 		return false;
 	}
 
 	for (size_t i = 0; i < name.length(); i++) {
-		if ((name.at(i) > 32 && name.at(i) < 48) || (name.at(i) > 58 && name.at(i) < 65) ||
-			(name.at(i) > 90 && name.at(i) < 96)) {
+		if ((name.at(i) > 32 && name.at(i) < 48) || (name.at(i) > 57 && name.at(i) < 65) ||
+			(name.at(i) > 90 && name.at(i) < 97) || (name.at(i) > 122 && name.at(i) < 127)) {
 			cout << ">> 특수문자 입력 불가. 다시 입력해주세요.\n";
 			return false;
 		}
