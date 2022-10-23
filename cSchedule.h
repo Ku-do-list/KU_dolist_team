@@ -1,6 +1,8 @@
 // ****** cSchedule.h ******
 #pragma once
 #include "cDate.h"
+#include <vector>
+#include <fstream>
 
 class cSchedule :
 	public cDate
@@ -9,7 +11,8 @@ private:
 	// @ 일정 이름 및 카테고리명
 	string sName;
 	string sCategory;
-
+	ofstream writeFileList; //txt 파일 스트림
+	ofstream writeFileCategory; 
 	// @ 일정의 타입
 	int sType = 0;
 	/*
@@ -34,10 +37,13 @@ public:
 
 	// @ 일정 추가
 	void makeSchedule();
-
+	// @ 일정 삭제
+	void deleteSchedule();
+	
 	// @ 일정 예외처리 함수
-	//int isRightSchedule();
-	int isRightSchedule(string name);
-	int isRightSchedule(int type);
-	int isRightSchedule(int year, int month, int day, int hour, int min);
+	// bool isRightSchedule(); : ProtoType, Override needed
+	bool isRightSchedule(string name);
+	bool isRightSchedule(int type);
+	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
+
 };
