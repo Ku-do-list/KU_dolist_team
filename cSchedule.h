@@ -13,6 +13,7 @@ private:
 	string sCategory;
 	ofstream writeFileList; //txt 파일 스트림
 	ofstream writeFileCategory; 
+
 	// @ 일정의 타입
 	int sType = 0;
 	/*
@@ -37,17 +38,35 @@ public:
 
 	bool duplicate = false;
 	int categoryNum = 3;
+
 	// @ 일정 추가
 	void makeSchedule(string* category, int& categorySize);
 	void manageCategory(string* category, int& categorySize);
 	string s = "";
+
 	// @ 일정 삭제
 	void deleteSchedule();
 	bool isSign(string str);
+
+	// @ 일정 편집
+	void edit_Schedule();
+	// @ 일정 편집 예외처리 함수 
+	int showmenu_edit();
+
+	// @ get methods
+	string getsName() const;
+	string getsCategory() const;
+	int getsType() const;
+	pair<int, int> getrAnnual() const;
+	int getrMonthly() const;
+	int getrWeekly() const;
+	string getDayW(int weekly) const;
+
 	// @ 일정 예외처리 함수
 	// bool isRightSchedule(); : ProtoType, Override needed
 	bool isRightSchedule(string name);
 	bool isRightSchedule(int type);
+	bool isRightSchedule(int year, int month);
 	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
 
 };

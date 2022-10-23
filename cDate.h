@@ -64,6 +64,17 @@ public:
 	// @ 윤년 여부 판단
 	bool IsLeafYear(const int& year);
 
+	int getsYear() const;
+	int getsMonth() const;
+	int getsDay() const;
+
+	int geteYear() const;
+	int geteMonth() const;
+	int geteDay() const;
+
+	int getsHour() const;
+	int getsMin() const;
+
 	// @ and Windows API Functions . . .
 	void gotoxy(int x, int y) {
 		COORD pos = { x,y };
