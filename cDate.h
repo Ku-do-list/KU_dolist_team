@@ -7,7 +7,7 @@
 #define new DBG_NEW
 #endif // !DBG_NEW
 #endif
-#include <time.h>
+#include <ctime>
 #include <Windows.h>
 #include <stdio.h>
 #include <iostream>
@@ -25,6 +25,10 @@ using namespace std;
 class cDate
 {
 private:
+	// @ 현재 시간
+	time_t temp;
+	struct tm* timeinfo;
+
 	// @ 12달의 각 일수 저장 (윤년 계산)
 	int* daysofMonth;
 
@@ -48,11 +52,17 @@ public:
 	cDate();
 	~cDate();
 
-	// @ 현재 시각 출력
-	void printNow();
+	// @ 현재 시각과 비교
+	bool isAfterNow(int year, int month, int day, int hour, int min);
 
-	// @ 윤년 계산해서 m[12] 업데이트
-	void applyLeafYear(const int& year);
+	// @ 시작 시각과 비교 in 반복일정
+	bool isAfterStart(int year, int month, int day, int hour, int min);
+
+	// @ 해당하는 날짜 요일 구하기
+	int getDayOfWeek(int year, int month, int day);
+
+	// @ 윤년 여부 판단
+	bool IsLeafYear(const int& year);
 
 	// @ and Windows API Functions . . .
 	void gotoxy(int x, int y) {

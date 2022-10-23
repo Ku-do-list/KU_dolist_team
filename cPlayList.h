@@ -1,5 +1,10 @@
+// ****** cPlayList.h ******
 #pragma once
 #include "cSchedule.h"
+
+#ifdef _MSC_VER
+#define localtime_r(_time, _result) _localtime64_s(_result, _time)
+#endif
 
 class cPlayList
 	:public cSchedule

@@ -1,7 +1,5 @@
-// ****** cDate.cpp ******
+ï»¿// ****** cDate.cpp ******
 #include "cDate.h"
-
-
 
 cDate::cDate()
 {
@@ -12,34 +10,81 @@ cDate::~cDate()
 {
 }
 
-void cDate::printNow()
+bool cDate::isAfterNow(int year, int month, int day, int hour, int min)
 {
-	bool isOn = true;
 	srand((unsigned)time(NULL));
-
 	time_t t;
-	char* str;
+	struct tm* now;
 
-	while (isOn) {
-		time(&t);
-		str = ctime(&t);
-		cout << "ÇöÀç ½Ã°£ : " << str;
-		Sleep(1000);
-		system("cls");
+	time(&t);
+	now = localtime(&t);
+
+	int yearNow = 1900 + now->tm_year;
+	int monthNow = 1 + now->tm_mon;
+	int dayNow = now->tm_mday;
+	int hourNow = now->tm_hour;
+	int minNow = now->tm_min;
+
+	if (year == yearNow) {
+		if (month == monthNow) {
+			if (day == dayNow) {
+				if (hour == hourNow) {
+					if (min < minNow)
+						return false;
+				}
+				else if (hour < hourNow)
+					return false;
+			}
+			else if (day < dayNow)
+				return false;
+		}
+		else if (month < monthNow)
+			return false;
 	}
+	else if (year < yearNow)
+		return false;
+	else
+		return true;
 }
 
-void cDate::applyLeafYear(const int& year)
+bool cDate::isAfterStart(int year, int month, int day, int hour, int min)
 {
-	// isLeafYear UPDATE
-	if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
-		this->isLeafYear = true;
+	if (year == sYear) {
+		if (month == sMonth) {
+			if (day == sDay) {
+				if (hour == sHour) {
+					if (min < sMin)
+						return false;
+				}
+				else if (hour < sHour)
+					return false;
+			}
+			else if (day < sDay)
+				return false;
+		}
+		else if (month < sMonth)
+			return false;
+	}
+	else if (year < sYear)
+		return false;
 	else
-		this->isLeafYear = false;
+		return true;
+}
 
-	// Day/Month UPDATE
-	int m[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-	m[1] = isLeafYear ? 29 : 28;
-	this->daysofMonth = m;
-	// cout << m[1];
+int cDate::getDayOfWeek(int year, int month, int day)
+{
+	// [0~6] = [Ã€Ã~Â¿Ã¹]
+	if (month < 3) {
+		year -= 1;
+		month += 12;
+	}
+	return (year + (year / 4) - (year / 100) + (year / 400) + (13 * month + 8) / 5 + day) % 7;
+}
+
+bool cDate::IsLeafYear(const int& year)
+{
+	if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
+		return true;
+	else
+		return false;
 }

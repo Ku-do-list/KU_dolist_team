@@ -1,5 +1,5 @@
+// ****** cPlayList.cpp ******
 #include "cPlayList.h"
-
 
 cPlayList::cPlayList()
 {
@@ -9,7 +9,6 @@ cPlayList::cPlayList()
 	/*
 
 	Data 파일 예시
-
 	12						-> &sCount
 	1 0 2022 10 12 19 30		-> &sType, &sIsDone, &날짜s
 	4 1 2022 10 1 10 30 2022 10 2 11 0	-> 마찬가지 (타입 받아서 분기 코드 쓰면 될 듯)
@@ -50,12 +49,23 @@ void cPlayList::addSchedule()
 	}
 	else {
 		cout << ">> 일정을 더 이상 추가할 수 없습니다.\n";
-		Sleep(1000);
+		_getch();
 	}
 }
 
+void cPlayList::removeSchedule()
+{
+	list[sCount--].deleteSchedule();
+}
+
+void cPlayList::checkSchedule()
+{
+	
+}
 bool cPlayList::readData(string filename)
 {
+
+
 	return false;
 }
 
@@ -99,17 +109,20 @@ void cPlayList::playList()
 	int sel = 0;
 	while (sel != 6) {
 		sel = showMenu();
+		srand((unsigned)time(NULL));
+
 		switch (sel) {
 		case 1: {
 			addSchedule();
 			break;
 		}
 		case 2: {
-			printf("2. 일정삭제");
+			removeSchedule();
 			break;
 		}
 		case 3: {
 			printf("3. 일정확인");
+			checkSchedule();
 			break;
 		}
 		case 4: {
@@ -134,13 +147,19 @@ int cPlayList::showMenu()
 re:;
 
 	system("cls");
-	cout << "1) 일정 추가 2) 일정 삭제 3) 일정 확인 4) 일정 편집 5) 카테고리 관리 6) 종료\n"
+	cout << "1) 일정 추가  2) 일정 삭제  3) 일정 확인  4) 일정 편집  5) 카테고리 관리  6) 종료\n"
 		<< "\n메뉴 번호를 입력해주세요 >> ";
 	cin >> sel;
 
-	if ((typeid(sel) != typeid(int)) || sel < 1 || sel > 6) {
-		cout << "입력을 다시 입력해주세요.\n";
-		sel = -1;
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		cout << ">> 올바른 입력 값을 다시 입력하세요.\n";
+		_getch();
+		goto re;
+	}
+	else if (sel < 1 || sel > 6) {
+		cout << ">> 1에서 6 사이의 값을 입력해주세요.\n";
 		_getch();
 		goto re;
 	}
