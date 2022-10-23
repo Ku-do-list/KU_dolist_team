@@ -117,11 +117,12 @@ int main(void)
 	}
 	writeFileList.put('/');
 
-	cout << "일정완료여부 " << endl;
-	while (cin.get(c) && c != '\n') // 일정 파일에 입력 / 엔터입력하면 종료 / 일정완료여부 입력
-	{
-		writeFileList.put(c);
-	}
+	cout << "일정완료여부 미정 " << endl;
+	//while (cin.get(c) && c != '\n') // 일정 파일에 입력 / 엔터입력하면 종료 / 일정완료여부 입력
+	//{
+	//	writeFileList.put(c);
+	//}
+	writeFileList << "미정";
 	writeFileList.put('/');
 	
 	if (iter) // 반복 있으면
@@ -217,12 +218,12 @@ int main(void)
 				break;
 		}
 	}
-	
+	/* 
 	for (int i = 0; i < outcategory.size(); i++)
 	{
 		cout << outcategory[i] << endl;
 	}
-	
+	*/
 	readFileList.close(); // 일정 파일 닫기
 	readFileCategory.close(); // 카테고리 파일 닫기
 	
