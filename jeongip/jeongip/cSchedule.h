@@ -1,14 +1,18 @@
 // ****** cSchedule.h ******
 #pragma once
 #include "cDate.h"
+#include <vector>
+#include <fstream>
 
 class cSchedule :
 	public cDate
 {
-protected:
+private:
 	// @ 일정 이름 및 카테고리명
 	string sName;
 	string sCategory;
+	ofstream writeFileList; //txt 파일 스트림
+	ofstream writeFileCategory;
 
 	// @ 일정의 타입
 	int sType = 0;
@@ -20,9 +24,9 @@ protected:
 	*/
 
 	// @ 반복 주기
-	pair<int, int> rAnnual = { 0,0 };	// 연 반복 주기
-	int rMontly = 0;					// 월 반복 주기
-	int rWeekly = 0;					// 주 반복 주기 [일 = 0 ~ 월 = 6]
+	pair<int, int> rAnnual = { 0,0 };	// 연반복
+	int rMontly = 0;
+	int rWeekly = 0;
 
 	// @ 스케줄 완료 여부
 	bool sIsDone = false;
@@ -32,8 +36,22 @@ public:
 	cSchedule();
 	~cSchedule();
 
+	bool duplicate = false;
+	int categoryNum = 3;
+
 	// @ 일정 추가
-	void makeSchedule();
+	void makeSchedule(string* category, int& categorySize);
+	void manageCategory(string* category, int& categorySize);
+	string s = "";
+
+	// @ 일정 삭제
+	void deleteSchedule();
+	bool isSign(string str);
+
+	// @ 일정 편집
+	void edit_Schedule();
+	// @ 일정 편집 예외처리 함수 
+	int showmenu_edit();
 
 	// @ 일정 예외처리 함수
 	// bool isRightSchedule(); : ProtoType, Override needed
@@ -53,8 +71,7 @@ public:
 
 	// @ set methods
 	void setsName(const string& name);
-	void setRepeat(const int& type);
+	void setRepeat(const int& type, const cSchedule& _list);
 	void setIsDone(const bool& is);
 	void setsType(const int& type);
 };
-

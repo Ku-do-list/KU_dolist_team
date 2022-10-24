@@ -1,7 +1,5 @@
-// ****** cDate.cpp ******
+ï»¿// ****** cDate.cpp ******
 #include "cDate.h"
-
-
 
 cDate::cDate()
 {
@@ -27,7 +25,7 @@ bool cDate::isAfterNow(int year, int month, int day, int hour, int min)
 	int hourNow = now->tm_hour;
 	int minNow = now->tm_min;
 
-	if (year == yearNow){
+	if (year == yearNow) {
 		if (month == monthNow) {
 			if (day == dayNow) {
 				if (hour == hourNow) {
@@ -35,17 +33,17 @@ bool cDate::isAfterNow(int year, int month, int day, int hour, int min)
 						return false;
 				}
 				else if (hour < hourNow)
-						return false;
+					return false;
 			}
 			else if (day < dayNow)
 				return false;
 		}
 		else if (month < monthNow)
-						return false;
+			return false;
 	}
-	else if (year < yearNow) 
+	else if (year < yearNow)
 		return false;
-	else 
+	else
 		return true;
 }
 
@@ -67,15 +65,15 @@ bool cDate::isAfterStart(int year, int month, int day, int hour, int min)
 		else if (month < sMonth)
 			return false;
 	}
-	else if (year < sYear) 
+	else if (year < sYear)
 		return false;
-	else 
+	else
 		return true;
 }
 
 int cDate::getDayOfWeek(int year, int month, int day)
 {
-	// [0~6] = [ÀÏ~¿ù]
+	// [0~6] = [Ã€Ã~Â¿Ã¹]
 	if (month < 3) {
 		year -= 1;
 		month += 12;
@@ -131,7 +129,7 @@ int cDate::getsMin() const
 	return this->sMin;
 }
 
-void cDate::setsTime(const int & year, const int & month, const int & day, const int & hour, const int & min)
+void cDate::setsTime(const int& year, const int& month, const int& day, const int& hour, const int& min)
 {
 	this->sYear = year;
 	this->sMonth = month;
@@ -140,7 +138,7 @@ void cDate::setsTime(const int & year, const int & month, const int & day, const
 	this->sMin = min;
 }
 
-void cDate::seteTime(const int & year, const int & month, const int & day, const int & hour, const int & min)
+void cDate::seteTime(const int& year, const int& month, const int& day, const int& hour, const int& min)
 {
 	this->eYear = year;
 	this->eMonth = month;

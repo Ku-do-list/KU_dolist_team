@@ -40,10 +40,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="data.txt">
+    <Text Include="KU_do_list_category.txt">
       <Filter>소스 파일</Filter>
     </Text>
-    <Text Include="categoryData.txt">
+    <Text Include="KU_do_list.txt">
       <Filter>소스 파일</Filter>
     </Text>
   </ItemGroup>

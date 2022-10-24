@@ -30,8 +30,8 @@
     <ClInclude Include="cSchedule.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="categoryData.txt" />
-    <Text Include="data.txt" />
+    <Text Include="KU_do_list_category.txt" />
+    <Text Include="KU_do_list.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

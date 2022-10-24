@@ -1,10 +1,20 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(jeongip.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   cPlayList.cpp
-c:\users\user\source\repos\jeongip\jeongip\cdate.h(78): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(87): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(138): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(149): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(208): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(432): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(704): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cdate.h(85): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(113): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(339): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(666): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(717): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(728): warning C4018: '<=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(803): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(902): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\user\source\repos\jeongip\jeongip\cplaylist.cpp(917): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  cSchedule.cpp
+c:\users\user\source\repos\jeongip\jeongip\cdate.h(85): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+c:\users\user\source\repos\jeongip\jeongip\cschedule.cpp(50): warning C4102: 're2': 참조되지 않은 레이블입니다.
+c:\users\user\source\repos\jeongip\jeongip\cschedule.cpp(614): warning C4102: 're3': 참조되지 않은 레이블입니다.
+  team15_main.cpp
+c:\users\user\source\repos\jeongip\jeongip\cdate.h(85): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  코드를 생성하고 있습니다...
+c:\users\user\source\repos\jeongip\jeongip\cschedule.cpp(198): warning C4715: 'cSchedule::isSign': 모든 제어 경로에서 값을 반환하지는 않습니다.
   jeongip.vcxproj -> C:\Users\user\source\repos\jeongip\Debug\KU_do_list.exe
