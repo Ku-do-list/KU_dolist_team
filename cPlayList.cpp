@@ -41,6 +41,58 @@ void cPlayList::addSchedule()
 void cPlayList::removeSchedule()
 {
 	list[sCount--].deleteSchedule();
+	// @@@
+//
+//	string name;
+//	int temp[100] = {}, count = 0, t;
+//	bool check = true;
+//
+//re:;
+//	system("cls");
+//	if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
+//	cout << "삭제할 일정의 이름을 입력하세요 >> ";
+//	getline(cin, name);
+//	if (!isRightSchedule(name)) {
+//		check = false;
+//		_getch();
+//		goto re;
+//	}
+//	for (size_t i = 0; i < sCount; i++) {
+//		if (list[i].getsName().compare(name) == 0) {
+//			temp[count++] = i;
+//		}
+//	}
+//re2:;
+//	if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
+//	if (count == 0) {
+//		cout << "해당하는 이름의 일정이 없습니다.\n";
+//		_getch();
+//		return;
+//	}
+//	else if (count) {
+//	re3:;
+//		char c;
+//		cout << "해당 일정을 삭제하시겠습니까? (y/n) >> ";
+//		cin >> c;
+//		if (cin.fail()) {
+//			cout << "올바른 입력을 다시 해주세요.\n";
+//			check = false;
+//			_getch();
+//			goto re3;
+//		}
+//		else if (c == 'n') {
+//			cout << "메인 메뉴로 다시 돌아갑니다.\n";
+//			_getch();
+//			return;
+//		}
+//		else if (c == 'y') {
+//			for (size_t i = temp[0]; i < sCount-1; i++) {
+//				
+//			}
+//			cout << "일정을 삭제합니다.\n";
+//			_getch();
+//		}
+//	}
 }
 
 void cPlayList::editSchedule()
@@ -366,7 +418,7 @@ re2:;
 				switch (sel) {
 				case 1: {	// 이름 편집
 					cout << "수정할 일정 이름을 입력해주세요 >> ";
-					string name;
+					string name, n = list[t].getsName();
 					cin.ignore(INT_MAX, '\n');
 					getline(cin, name);
 					if (!isRightSchedule(name)) {
@@ -375,7 +427,8 @@ re2:;
 						goto re2;
 					}
 					list[t].setsName(name);
-					cout << "일정 이름이 " << list[t].getsName() << "으로 변경되었습니다.";
+					cout << "일정 이름이 " << n << "에서 " << list[t].getsName() << "으로 변경되었습니다.";
+					_getch();
 					break;
 				}
 				case 2: {	// 날짜 및 시각 편집
@@ -399,8 +452,31 @@ re2:;
 					break;
 				}
 				case 3: {	// 카테고리 편집
+					/*while (1) {
+						cin.clear(); cin.ignore(INT_MAX, '\n');
+						for (int i = 0; i < categorySize; i++) {
+							cout << i + 1 << ". " << category[i] << " ";
+						}
+						cout << endl;
+						cout << "편집하실 카테고리 번호를 입력해주세요 >> ";
+						cin >> categoryNum;
 
-					break;
+						// @ 예외처리
+						if (!categoryNum) {
+							cout << "숫자만 입력하세요. " << endl << endl;
+						}
+						else if (categoryNum < 1 || categoryNum >categorySize) {
+							cout << "1~" << categorySize << "사이의 숫자만 입력해주세요 " << endl << endl;
+						}
+						else
+						{
+							list[t].setsCategory(category[categoryNum-1]);
+							cout << "카테고리가 변경되었습니다." << endl;
+							break;
+						}
+					}*/
+						break;
+
 				}
 				case 4: {	// 반복 기능
 					int a;
@@ -488,7 +564,7 @@ re2:;
 				switch (sel) {
 				case 1: {	// 이름 편집
 					cout << "수정할 일정 이름을 입력해주세요 >> ";
-					string name;
+					string name, n = list[t].getsName();
 					cin.ignore(INT_MAX, '\n');
 					getline(cin, name);
 					if (!isRightSchedule(name)) {
@@ -497,7 +573,7 @@ re2:;
 						goto re2;
 					}
 					list[t].setsName(name);
-					cout << "일정 이름이 " << list[t].getsName() << "으로 변경되었습니다.";
+					cout << "일정 이름이 " << n <<"에서 " << list[t].getsName() << "으로 변경되었습니다.";
 					break;
 				}
 				case 2: {	// 날짜 및 시각 편집
@@ -546,6 +622,7 @@ re2:;
 							}
 						}
 						cout << "반복 일정 변경이 완료되었습니다.\n";
+						_getch();
 					}
 					list[t].setRepeat(list[t].getsType());
 					break;

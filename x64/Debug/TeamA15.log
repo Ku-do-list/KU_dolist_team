@@ -1,1 +1,7 @@
-﻿  TeamA15.vcxproj -> C:\Users\리림\source\repos\TeamA15\x64\Debug\TeamA15.exe
+﻿  cSchedule.cpp
+C:\Users\리림\source\repos\TeamA15\TeamA15\cDate.h(85,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\리림\source\repos\TeamA15\TeamA15\cDate.h(85,19): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\리림\source\repos\TeamA15\TeamA15\cSchedule.cpp(50,5): warning C4102: 're2': 참조되지 않은 레이블입니다.
+C:\Users\리림\source\repos\TeamA15\TeamA15\cSchedule.cpp(630,7): warning C4102: 're3': 참조되지 않은 레이블입니다.
+C:\Users\리림\source\repos\TeamA15\TeamA15\cSchedule.cpp(198): warning C4715: 'cSchedule::isSign': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  TeamA15.vcxproj -> C:\Users\리림\source\repos\TeamA15\x64\Debug\TeamA15.exe
