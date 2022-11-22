@@ -95,6 +95,7 @@ void cPlayList::removeSchedule()
 //	}
 }
 
+// $ NEW : 날짜 입력 형식 변경 (일정추가와 동일)
 void cPlayList::editSchedule()
 {
 	string name;
@@ -117,16 +118,17 @@ re:;
 	}
 re2:;
 	if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
-	if (count == 0) {
-		cout << ">> 해당하는 이름의 일정이 없습니다.";
+
+	if (count == 0) {		// 사용자 입력 이름의 일정이 없을 경우
+		cout << ">> 해당하는 이름의 일정이 없습니다. 일정 편집을 종료합니다.\n";
 		_getch();
 		return;
 	}
-	else if (count == 1) {
+	else if (count == 1) {	// 사용자 입력 이름의 일정이 유일할 경우
 		int sel;
 		int t = temp[0];
 		if (list[t].getsType() == 4) {	// 반복성 x
-			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4) 반복기능 5)일정 완료 여부 >>";
+			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4) 반복기능 5)일정 완료 여부 >> ";
 			cin >> sel;
 			if (!cin) {
 				cout << ">> 올바른 입력을 해주세요.\n";
@@ -157,23 +159,44 @@ re2:;
 					break;
 				}
 				case 2: {	// 날짜 및 시각 편집
-					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-					int year, month, day, hour, min;
+					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 12 03 00 30] >> ";
+					
+					// $ NEW
+					cin.ignore(INT_MAX, '\n');
+					string sTime;
+					getline(cin, sTime);
+					if (!list[t].isRightTimeString(true, sTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					/*int year, month, day, hour, min;
 					cin >> year >> month >> day >> hour >> min;
 					if (!isRightSchedule(true, year, month, day, hour, min)) {
 						check = false;
 						_getch();
 						goto re2;
 					}
-					list[t].setsTime(year, month, day, hour, min);
-					cout << "변경할 일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-					cin >> year >> month >> day >> hour >> min;
+					list[t].setsTime(year, month, day, hour, min);*/
+					
+					cout << "변경할 일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2023 02 03 00 30] >> ";
+					
+					string eTime;
+					getline(cin, eTime);
+					if (!list[t].isRightTimeString(false, eTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					/*cin >> year >> month >> day >> hour >> min;
 					if (!isRightSchedule(false, year, month, day, hour, min)) {
 						check = false;
 						_getch();
 						goto re2;
 					}
-					list[t].seteTime(year, month, day, hour, min);
+					list[t].seteTime(year, month, day, hour, min);*/
+					cout << "일정의 날짜 및 시각 편집이 완료되었습니다.\n";
+					_getch();
 					break;
 				}
 				case 3: {	// 카테고리 편집
@@ -202,15 +225,26 @@ re2:;
 							int year, month, day, hour, min;
 						re3:;
 							cout << "일정의 마감 시간을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
-							cin >> year >> month >> day >> hour >> min;
-							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+							// $ NEW
+							cin.ignore(INT_MAX, '\n');
+							string eTime;
+							getline(cin, eTime);
+							if (!list[t].isRightTimeString(false, eTime)) {
 								check = false;
 								_getch();
 								goto re3;
 							}
+							/*cin >> year >> month >> day >> hour >> min;
+							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+								check = false;
+								_getch();
+								goto re3;
+							}*/
 						}
 					}
 					list[t].setRepeat(list[t].getsType(), list[t]);
+					cout << "일정의 반복 여부 편집이 완료되었습니다.";
+					_getch();
 					break;
 				}
 				case 5: {	// 일정 완료 여부
@@ -233,13 +267,12 @@ re2:;
 						if (s == 1) {
 							list[t].setIsDone(true);
 							cout << "일정 완료 여부를 true로 변경합니다.\n";
-							_getch();
 						}
 						else {
 							list[t].setIsDone(false);
 							cout << "일정 완료 여부를 false로 변경합니다.\n";
-							_getch();
 						}
+						_getch();
 					}
 					break;
 				}
@@ -247,7 +280,7 @@ re2:;
 			}
 		}
 		else {	// 반복성 일정, type= 1 || 2 || 3
-			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4)반복기능 >>";
+			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4)반복기능 >> ";
 			cin >> sel;
 			if (!cin) {
 				cout << ">> 올바른 입력을 해주세요.\n";
@@ -279,14 +312,25 @@ re2:;
 				}
 				case 2: {	// 날짜 및 시각 편집
 					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-					int year, month, day, hour, min;
+					// $ NEW
+					cin.ignore(INT_MAX, '\n');
+					string sTime;
+					getline(cin, sTime);
+					if (!list[t].isRightTimeString(true, sTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					/*int year, month, day, hour, min;
 					cin >> year >> month >> day >> hour >> min;
 					if (!isRightSchedule(true, year, month, day, hour, min)) {
 						check = false;
 						_getch();
 						goto re2;
 					}
-					list[t].setsTime(year, month, day, hour, min);
+					list[t].setsTime(year, month, day, hour, min);*/
+					cout << "일정의 날짜 및 시각 편집이 완료되었습니다.\n";
+					_getch();
 					break;
 				}
 				case 3: {	// 카테고리 편집
@@ -312,15 +356,25 @@ re2:;
 					else {
 						list[t].setsType(a);
 						if (a == 4) {
-							int year, month, day, hour, min;
+							string eTime;
+							//int year, month, day, hour, min;
 						re4:;
-							cout << "일정의 마감 시간을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
-							cin >> year >> month >> day >> hour >> min;
-							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+							cout << "일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
+							cin.ignore(INT_MAX, '\n');
+							getline(cin, eTime);
+							if (!list[t].isRightTimeString(false, eTime)) {
 								check = false;
 								_getch();
 								goto re4;
 							}
+							/*cin >> year >> month >> day >> hour >> min;
+							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+								check = false;
+								_getch();
+								goto re4;
+							}*/
+							cout << "일정의 반복 여부 편집이 완료되었습니다.\n";
+							_getch();
 						}
 					}
 					list[t].setRepeat(list[t].getsType(), list[t]);
@@ -330,9 +384,7 @@ re2:;
 			}
 		}
 	}
-
-	////////////////////////////////////////////////////////////
-	else {	// count가 2 이상인 경우 (같은 이름 일정 여러가지) ///////
+	else {					// 사용자 입력 이름의 일정이 여러 개인 경우
 		int sel, t;
 		for (size_t i = 0; i < count; i++) {
 			cout << i + 1 << ") " << list[temp[i]].getsName()
@@ -398,7 +450,7 @@ re2:;
 		}
 
 		if (list[t].getsType() == 4) {	// 반복성 x
-			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4) 반복기능 5)일정 완료 여부 >>";
+			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4) 반복기능 5)일정 완료 여부 >> ";
 			cin >> sel;
 			if (!cin) {
 				cout << ">> 올바른 입력을 해주세요.\n";
@@ -416,7 +468,7 @@ re2:;
 				switch (sel) {
 				case 1: {	// 이름 편집
 					cout << "수정할 일정 이름을 입력해주세요 >> ";
-					string name, n = list[t].getsName();
+					string name, back = list[t].getsName();
 					cin.ignore(INT_MAX, '\n');
 					getline(cin, name);
 					if (!isRightSchedule(name)) {
@@ -425,13 +477,29 @@ re2:;
 						goto re2;
 					}
 					list[t].setsName(name);
-					cout << "일정 이름이 " << n << "에서 " << list[t].getsName() << "으로 변경되었습니다.";
+					cout << "일정 이름이 " << back << "에서 " << list[t].getsName() << "으로 변경되었습니다.";
 					_getch();
 					break;
 				}
 				case 2: {	// 날짜 및 시각 편집
-					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-					int year, month, day, hour, min;
+					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 12 20 00 30] >> ";
+					// $ NEW
+					cin.ignore(INT_MAX, '\n');
+					string sTime, eTime;
+					getline(cin, sTime);
+					if (!list[t].isRightTimeString(true, sTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					cout << "변경할 일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2023 02 20 03 30] >> ";
+					getline(cin, eTime);
+					if (!list[t].isRightTimeString(false, eTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					/*int year, month, day, hour, min;
 					cin >> year >> month >> day >> hour >> min;
 					if (!isRightSchedule(true, year, month, day, hour, min)) {
 						check = false;
@@ -446,7 +514,9 @@ re2:;
 						_getch();
 						goto re2;
 					}
-					list[t].seteTime(year, month, day, hour, min);
+					list[t].seteTime(year, month, day, hour, min);*/
+					cout << "일정의 날짜 및 시각 편집을 완료했습니다.\n";
+					_getch();
 					break;
 				}
 				case 3: {	// 카테고리 편집
@@ -497,16 +567,27 @@ re2:;
 						if (a == 4) {
 							int year, month, day, hour, min;
 						re5:;
-							cout << "일정의 마감 시간을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
-							cin >> year >> month >> day >> hour >> min;
-							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+							cout << "일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
+							// $ NEW
+							cin.ignore(INT_MAX, '\n');
+							string eTime;
+							getline(cin, eTime);
+							if (!list[t].isRightTimeString(false, eTime)) {
 								check = false;
 								_getch();
 								goto re5;
 							}
+							/*cin >> year >> month >> day >> hour >> min;
+							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+								check = false;
+								_getch();
+								goto re5;
+							}*/
 						}
 					}
 					list[t].setRepeat(list[t].getsType(), list[t]);
+					cout << "일정의 반복 타입 편집을 완료했습니다.\n";
+					_getch();
 					break;
 				}
 				case 5: {	// 일정 완료 여부
@@ -543,7 +624,7 @@ re2:;
 			}
 		}
 		else {	// 반복성 일정, type= 1 || 2 || 3
-			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4)반복기능 >>";
+			cout << "일정의 편집할 내용을 선택하세요 1)이름 2)날짜 및 시각 3)카테고리 4)반복기능 >> ";
 			cin >> sel;
 			if (!cin) {
 				cout << ">> 올바른 입력을 해주세요.\n";
@@ -571,18 +652,30 @@ re2:;
 					}
 					list[t].setsName(name);
 					cout << "일정 이름이 " << n << "에서 " << list[t].getsName() << "으로 변경되었습니다.";
+					_getch();
 					break;
 				}
 				case 2: {	// 날짜 및 시각 편집
-					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-					int year, month, day, hour, min;
+					cout << "변경할 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 12 20 00 30] >> ";
+					// $ NEW
+					cin.ignore(INT_MAX, '\n');
+					string sTime;
+					getline(cin, sTime);
+					if (!list[t].isRightTimeString(true, sTime)) {
+						check = false;
+						_getch();
+						goto re2;
+					}
+					/*int year, month, day, hour, min;
 					cin >> year >> month >> day >> hour >> min;
 					if (!isRightSchedule(true, year, month, day, hour, min)) {
 						check = false;
 						_getch();
 						goto re2;
 					}
-					list[t].setsTime(year, month, day, hour, min);
+					list[t].setsTime(year, month, day, hour, min);*/
+					cout << "일정의 날짜 및 시각 편집을 완료했습니다.\n";
+					_getch();
 					break;
 				}
 				case 3: {	// 카테고리 편집
@@ -611,15 +704,26 @@ re2:;
 							int year, month, day, hour, min;
 						re6:;
 							cout << "일정의 마감 시간을 입력해주세요 [ex) 2024 12 10 00 00] >> ";
-							cin >> year >> month >> day >> hour >> min;
-							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+							// $ NEW
+							cin.ignore(INT_MAX, '\n');
+							string eTime;
+							getline(cin, eTime);
+							if (!list[t].isRightTimeString(false, eTime)) {
 								check = false;
 								_getch();
 								goto re6;
 							}
+							/*cin >> year >> month >> day >> hour >> min;
+							if (!list[t].isRightSchedule(false, year, month, day, hour, min)) {
+								check = false;
+								_getch();
+								goto re6;
+							}*/
 						}
 					}
 					list[t].setRepeat(list[t].getsType(), list[t]);
+					cout << "일정의 반복 여부 편집을 완료했습니다.\n";
+					_getch();
 					break;
 				}
 				}

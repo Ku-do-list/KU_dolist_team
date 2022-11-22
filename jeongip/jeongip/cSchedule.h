@@ -60,6 +60,10 @@ public:
 	bool isRightSchedule(int year, int month);
 	bool isRightSchedule(bool isS, int year, int month, int day, int hour, int min);
 
+	// $ NEW : string 타입 날짜시각 변환
+	bool isRightTimeString(bool isStart, string time);
+	bool transTimeToInt(bool isStart, string time);
+	
 	// @ get methods
 	string getsName() const;
 	string getsCategory() const;

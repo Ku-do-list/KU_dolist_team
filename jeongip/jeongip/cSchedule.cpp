@@ -13,13 +13,14 @@ cSchedule::~cSchedule()
 {
 }
 
+// $ NEW : 날짜 입력 시 int -> string 타입 교체 및 예외처리
 void cSchedule::makeSchedule(string* category, int& categorySize)
 {
 	writeFileList.open("KU_do_list.txt", ios::out | ios::app);
 	writeFileCategory.open("KU_do_list_category.txt", ios::out | ios::app);
 	bool check = true;		// 예외 발생 체크
 	int sel = -1;
-	int year, month, day, hour, min;
+	//int year, month, day, hour, min;
 	string name;
 
 	while (1) {
@@ -39,7 +40,7 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 			goto re1;
 		}
 		else {
-			char ch1[20] = ""; //초기화 적용
+			char ch1[40] = ""; //초기화 적용
 			strcpy(ch1, name.c_str());
 			writeFileList.put('\n');
 			writeFileList.write(ch1, sizeof(ch1));
@@ -130,50 +131,41 @@ void cSchedule::makeSchedule(string* category, int& categorySize)
 
 		// 4. 시작 및 마감 날짜 입력
 	re4:;
+		string Stime;
+
 		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
-		cout << "일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] >> ";
-		cin >> year >> month >> day >> hour >> min;
-		if (!isRightSchedule(true, year, month, day, hour, min)) {
+		cout << "일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 12 25 15 00] >> ";
+		getline(cin, Stime);
+		//cout << Stime << " => 입력 시간 체크\n사이즈 : " << Stime.size();
+		if (!isRightTimeString(true, Stime)) {
 			check = false;
 			_getch();
 			goto re4;
 		}
 		else {
-			string syear = to_string(year);
-			string smonth = to_string(month);
-			string sday = to_string(day);
-			string shour = to_string(hour);
-			string smin = to_string(min);
-			string sresult = syear + " " + smonth + " " + sday + " " + shour + " " + smin;
-
+			//transTimeToInt(true, Stime);
+			string sresult = Stime;
 			char ch4[20] = "";
 			strcpy(ch4, sresult.c_str());
 			writeFileList.write(ch4, sizeof(ch4));
-			//writeFileList.put('\n');
 		}
 
 	re5:;
 		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
 		if (sel == 4) {
-			cout << "일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2022 02 07 15 30] >> ";
-			cin >> year >> month >> day >> hour >> min;
-			if (!isRightSchedule(false, year, month, day, hour, min)) {
+			string Etime;
+			cout << "일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2022 12 30 17 00] >> ";
+			getline(cin, Etime);
+			if (!isRightTimeString(false, Etime)) {
 				check = false;
 				_getch();
 				goto re5;
 			}
 			else {
-				string syear = to_string(year);
-				string smonth = to_string(month);
-				string sday = to_string(day);
-				string shour = to_string(hour);
-				string smin = to_string(min);
-				string sresult = "&" + syear + " " + smonth + " " + sday + " " + shour + " " + smin;
-
+				string sresult = "&" + Etime;
 				char ch4[20] = "";
 				strcpy(ch4, sresult.c_str());
 				writeFileList.write(ch4, sizeof(ch4));
-
 			}
 		}
 		else {
@@ -234,7 +226,6 @@ bool cSchedule::isRightSchedule(string name)
 	return true;
 }
 
-
 // # 예외처리 함수 :: 반복 타입
 bool cSchedule::isRightSchedule(int type)
 {
@@ -277,34 +268,34 @@ bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour
 	m[1] = isLeaf ? 29 : 28;
 
 	if (!cin) {
-		cout << ">> 형식에 맞는 올바른 입력을 해주세요.\n\n";
+		cout << ">> 형식에 맞는 올바른 입력을 해주세요.\n";
 		return false;
 	}
 	else if (year > 2025) {
-		cout << ">> 2025년 까지만 입력 가능합니다. 다시 입력해주세요.\n\n";
+		cout << ">> 2025년 까지만 입력 가능합니다. 다시 입력해주세요.\n";
 		return false;
 	}
 	else if (month < 1 || month > 12) {
-		cout << ">> 입력하신 날짜의 월을 다시 확인해주세요.\n\n";
+		cout << ">> 입력하신 날짜의 월을 다시 확인해주세요.\n";
 		return false;
 	}
 	else if (day < 1 || day > m[month - 1]) {
-		cout << ">> 입력하신 날짜의 일자를 다시 확인해주세요.\n\n";
+		cout << ">> 입력하신 날짜의 일자를 다시 확인해주세요.\n";
 		return false;
 	}
 	else if (hour < 0 || hour > 23) {
-		cout << ">> 입력하신 날짜의 시간을 다시 확인해주세요.\n\n";
+		cout << ">> 입력하신 날짜의 시간을 다시 확인해주세요.\n";
 		return false;
 	}
 	else if (min < 0 || min > 59) {
-		cout << ">> 입력하신 날짜의 분을 다시 확인해주세요.\n\n";
+		cout << ">> 입력하신 날짜의 분을 다시 확인해주세요.\n";
 		return false;
 	}
 
 	else {
 		if (isS) {
 			if (!isAfterNow(year, month, day, hour, min)) {
-				cout << ">> 현재 이전의 날짜는 입력하실 수 없습니다.\n\n";
+				cout << ">> 현재 이전의 날짜는 입력하실 수 없습니다.\n";
 				return false;
 			}
 			this->sYear = year;
@@ -345,6 +336,55 @@ bool cSchedule::isRightSchedule(bool isS, int year, int month, int day, int hour
 	}
 }
 
+// $ NEW : 날짜 및 시각 입력 시 형식 체크, 옳은 형식일 시 자동 등록까즤
+bool cSchedule::isRightTimeString(bool isStart, string time)
+{
+	// 여기서 transTimeToInt 써야함, isStart 멤버 추가해서 유동적 수정 해보자...
+	if (time.size() != 16) {
+		cout << ">> 올바른 형식의 입력을 해주세요.\n";
+		return false;
+	}
+
+	for (int i = 0; i < 16; i++) {
+		if(i==4 || i==7 || i==10 || i==13){
+			if (!(time.at(i) == 32)) {
+				cout << ">> 올바른 형식의 입력을 해주세요.\n";
+				return false;
+			}
+		}
+		else {
+			if (!(time.at(i) >= '0' && time.at(i) <= '9')) {
+				cout << ">> 올바른 형식의 입력을 해주세요.\n";
+				return false;
+			}
+		}
+	}
+
+	if (transTimeToInt(isStart, time))
+		return true;
+	else
+		return false;
+}
+
+// $ NEW : string -> int로 날짜 바꿔서 예외처리 후 입력
+bool cSchedule::transTimeToInt(bool isStart, string time)
+{
+	int year, month, day, hour, min;
+
+	year = (int)((time.at(0) - 48) * 1000 + (time.at(1) - 48) * 100 + (time.at(2) - 48) * 10 + (time.at(3) - 48));
+	month = (int)((time.at(5) - 48) * 10 + (time.at(6) - 48));
+	day = (int)((time.at(8) - 48) * 10 + (time.at(9) - 48));
+	hour = (int)((time.at(11) - 48) * 10 + (time.at(12) - 48));
+	min = (int)((time.at(14) - 48) * 10 + (time.at(15) - 48));
+	
+	if (isRightSchedule(isStart, year, month, day, hour, min)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void cSchedule::deleteSchedule()
 {
 	string delete_name;
@@ -354,7 +394,7 @@ void cSchedule::deleteSchedule()
 		system("cls");
 		cout << "<일정 삭제>\n\n";
 
-		// 1. 일정 이름	:: 엔터 한 번 입력해야하는 버그 디버깅하기
+		// 1. 일정 이름
 	re1:;
 		if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
 		cout << "삭제할 일정의 이름을 입력해주세요 >> ";
@@ -561,12 +601,13 @@ void cSchedule::edit_Schedule() {
 			re2:;
 				if (!check) cin.clear(); cin.ignore(INT_MAX, '\n');
 
+				string Stime;
 				if (sType == 4) {
 					cout << "현재 시작 날짜 및 시각: " << sYear << sMonth << sDay << sHour << sMin << endl;
 					cout << "수정된 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] \n >> ";
 
-					cin >> year >> month >> day >> hour >> min;
-					if (!isRightSchedule(true, year, month, day, hour, min)) {
+					getline(cin, Stime);
+					if (!isRightTimeString(true, Stime)) {
 						check = false;
 						_getch();
 						goto re2;
@@ -580,8 +621,8 @@ void cSchedule::edit_Schedule() {
 					cout << "현재 시작 날짜 및 시각: " << sYear << sMonth << sDay << sHour << sMin << endl;
 					cout << "수정된 일정의 시작 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] \n >> ";
 
-					cin >> year >> month >> day >> hour >> min;
-					if (!isRightSchedule(true, year, month, day, hour, min)) {
+					getline(cin, Stime);
+					if (!isRightTimeString(true, Stime)) {
 						check = false;
 						_getch();
 						goto re2;
@@ -592,9 +633,9 @@ void cSchedule::edit_Schedule() {
 
 					cout << "현재 마감 날짜 및 시각: " << sYear << sMonth << sDay << sHour << sMin << endl;
 					cout << "수정된 일정의 마감 날짜 및 시각을 입력해주세요 [ex) 2022 02 03 00 30] \n >> ";
-
-					cin >> eyear >> emonth >> eday >> ehour >> emin;
-					if (!isRightSchedule(false, eyear, emonth, eday, ehour, emin)) {
+					string Etime;
+					getline(cin, Etime);
+					if (!isRightTimeString(false, Etime)) {
 						check = false;
 						_getch();
 						goto re2;

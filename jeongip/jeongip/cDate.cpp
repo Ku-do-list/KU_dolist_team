@@ -73,7 +73,7 @@ bool cDate::isAfterStart(int year, int month, int day, int hour, int min)
 
 int cDate::getDayOfWeek(int year, int month, int day)
 {
-	// [0~6] = [ÀÏ~¿ù]
+	// [0~6] = [일 ~ 월]
 	if (month < 3) {
 		year -= 1;
 		month += 12;
